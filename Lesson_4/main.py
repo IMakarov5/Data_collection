@@ -20,9 +20,11 @@ for item in items:
     # print(item)
     response = requests.get(item, headers=headers)
     dom_item = html.fromstring(response.content)
+    items_list ['href'] = item
     items_list ['name']  = dom_item.xpath("//h1[@class='hdr__inner']/text()")
     items_list ['intro']= dom_item.xpath("//div[contains(@class,'article__intro')]/p/text()")
     items_list ['time'] = dom_item.xpath("//span[contains(@class,'js-ago')]/text()")
+    items_list ['source'] = dom_item.xpath("//span[@class='note']//span[@class='link__text']/text()")
     
     
     items_lists.append(items_list)
