@@ -36,10 +36,9 @@ class UnsplashSpider(scrapy.Spider):
                                     # "//div[@class='zmDAx']//div[@class='MorZF']/img/@src")
                                     
         # loader.add_xpath ('photos', "//div[@class='MorZF']//@src")
-        
-        
-
         yield loader.load_item()
+
+    
         
 
 

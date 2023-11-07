@@ -10,25 +10,39 @@ import scrapy
 from itemadapter import ItemAdapter
 
 from scrapy.pipelines.images import ImagesPipeline
+from pprint import pprint
+
+import json
 
 
 class PhotoparserPipeline:
     def process_item(self, item, spider):
-        print(item)
+       
+        
+        items={}
+        
+        items['name'] = item['name']
+        items['photos']= item['photos']
+        items['url']=item['url']
+        # сохранение данных в JSON-файл
+        with open('photos/photos_file.json', 'a', encoding='utf-8') as file:
+             json.dump(items, file)
+       
         return item
 
 class PhotosPipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
-
-        if item['photos']:
+          if item['photos']:
             for img_url in item['photos']:
                 try:
                     yield scrapy.Request(img_url)
                 except Exception as e:
                     print(e)
+        
 
     def item_completed(self, results, item, info):
-        print()
+       
         if results:
             item['photos'] = [itm[1] for itm in results if itm[0]]
+                   
         return item
