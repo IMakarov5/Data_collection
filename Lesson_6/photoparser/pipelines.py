@@ -18,16 +18,27 @@ import json
 class PhotoparserPipeline:
     def process_item(self, item, spider):
        
-        
+        separator = ' ; '
+
         items={}
         
         items['name'] = item['name']
         items['photos']= item['photos']
         items['url']=item['url']
+        items['category']=item['category']
         # сохранение данных в JSON-файл
         with open('photos/photos_file.json', 'a', encoding='utf-8') as file:
              json.dump(items, file)
        
+        with open('photos/photos_file.csv', 'a', encoding='utf-8') as file:
+             file.write(item['name']+ separator 
+                        + item['photos'][0]['path'] + separator
+                        + item['photos'][0]['url'] + separator 
+                        + ', '.join(map(str, item['category']))
+                        )
+            
+             file.write('\n')
+        
         return item
 
 class PhotosPipeline(ImagesPipeline):

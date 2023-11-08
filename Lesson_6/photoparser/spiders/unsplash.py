@@ -34,6 +34,7 @@ class UnsplashSpider(scrapy.Spider):
         loader.add_value ('url', response.url)
         loader.add_xpath ('photos', "//button[@class='ju2Kp jpBZ0 m5u7p aZ5iK']//div[@class='MorZF']//@src")
                                     # "//div[@class='zmDAx']//div[@class='MorZF']/img/@src")
+        loader.add_xpath('category','//a[@class="IMl2x Ha8Q_"]/text()')
                                     
         # loader.add_xpath ('photos', "//div[@class='MorZF']//@src")
         yield loader.load_item()
